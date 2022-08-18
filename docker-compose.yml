@@ -12,7 +12,7 @@ services:
       - front
 
   front:
-    image: frontend
+    image: frontendd
     stdin_open: true
     ports:
       - "3000:3000"
