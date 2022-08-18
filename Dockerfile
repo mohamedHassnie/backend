@@ -4,7 +4,7 @@ WORKDIR  /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 3011
+EXPOSE 3017
 CMD ["npm", "start"]
 
 #stage de server nginx pour démarer app
