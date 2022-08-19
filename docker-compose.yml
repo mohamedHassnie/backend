@@ -15,7 +15,7 @@ services:
     image: frontendd
     stdin_open: true
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
       - ./:/app
       - /app/node_modules
