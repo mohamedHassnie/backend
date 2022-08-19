@@ -447,7 +447,7 @@ router.get("/api/dataGT", async (req, res) => {
 
 // Json.Document(
 //   Web.Contents(
-//    "http://localhost:3017/api/stats/?type=dna&limit=10000&page="&[page]
+//    "http://10.10.50.24:3017/api/stats/?type=dna&limit=10000&page="&[page]
 //   )
 
 router.get("/api/stats/", async (req, res, next) => {
