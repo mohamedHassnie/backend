@@ -8,7 +8,6 @@ patient = new mongoose.Schema({
   LastName: {
     type: String,
   },
-
   email: { type: String },
   phone: { type: Number },
   Nationality: {
@@ -29,6 +28,7 @@ patient = new mongoose.Schema({
   },
   Gender: { type: String },
   Contact_number: { type: String },
+  role: { type: String, default: "patient" },
 });
 
 module.exports = patient = mongoose.model("patient", patient);

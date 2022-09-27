@@ -38,10 +38,10 @@ const vacationStatus = (vacations, year = "") => {
   //console.log("ee", calculateVacationPeriod().days);
   // extract the max days attribute from  vacation in the same year
   const maxDays = vacationsInSameYear[0].maxDays;
-  const maxDaysMalade = vacationsInSameYear[0].maxDaysMalade;
+  const maxDayssick = vacationsInSameYear[0].maxDayssick;
   const type_vacation = vacationsInSameYear[0].type_vacation;
   console.log("max", maxDays);
-  console.log("maxDaysMalade", maxDaysMalade);
+  console.log("maxDayssick", maxDayssick);
   if (type_vacation === " normal") {
     if (totalDays >= maxDays) {
       return {
@@ -55,7 +55,7 @@ const vacationStatus = (vacations, year = "") => {
       };
     }
   } else {
-    if (totalDays >= maxDaysMalade) {
+    if (totalDays >= maxDayssick) {
       return {
         status: "rejected",
         remainingDays: 0,
@@ -63,7 +63,7 @@ const vacationStatus = (vacations, year = "") => {
     } else {
       return {
         status: "pending",
-        remainingDays: maxDaysMalade - totalDays,
+        remainingDays: maxDayssick - totalDays,
       };
     }
   }

@@ -9,7 +9,7 @@ Vacation = new mongoose.Schema({
   type_vacation: { type: String, required: false },
   message: { type: String, required: false },
   maxDays: { type: Number, default: 15 },
-  maxDaysMalade: { type: Number, default: 12 },
+  maxDayssick: { type: Number, default: 12 },
   days: { type: Number },
   status: { type: String, default: "pending" },
 });

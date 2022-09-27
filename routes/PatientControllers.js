@@ -202,16 +202,15 @@ router.get(
   })
 );
 router.get("/api/searchPatient/:key", async (req, res) => {
-  let data
-  console.log("sdddddddd" , req?.params?.key)
-  if (req?.params?.key != "all" )
-  { data= await Patient.find({
-    $or: [{ UserName: { $regex: req.params.key } }],
-  });
-
-}
-  else { data = await Patient.find();}
+  let data;
+  console.log("sdddddddd", req?.params?.key);
+  if (req?.params?.key != "all") {
+    data = await Patient.find({
+      $or: [{ UserName: { $regex: req.params.key } }],
+    });
+  } else {
+    data = await Patient.find();
+  }
   res.send(data);
- 
 });
 module.exports = router;

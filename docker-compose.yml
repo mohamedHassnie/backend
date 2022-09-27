@@ -25,7 +25,7 @@ services:
   webservices:
     build: .
     ports:
-      - "3017:3017"
+      - "3019:3019"
     environment:
       - PORT=3000
       - USER=test

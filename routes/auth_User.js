@@ -82,24 +82,24 @@ function upsert(array, item) {
   else array.push(item);
 }
 
-router.post("/api/google-login", async (req, res) => {
-  const { token } = req.body;
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience:
-      "913791692427-7op1mas3df4pt1fikad6pli7njalnov2.apps.googleusercontent.com",
-  });
+// router.post("/api/google-login", async (req, res) => {
+//   const { token } = req.body;
+//   const ticket = await client.verifyIdToken({
+//     idToken: token,
+//     audience:
+//       "913791692427-7op1mas3df4pt1fikad6pli7njalnov2.apps.googleusercontent.com",
+//   });
 
-  const { name, email, picture, sub } = ticket.getPayload();
+//   const { name, email, picture, sub } = ticket.getPayload();
 
-  upsert(users, { name, email, picture });
+//   upsert(users, { name, email, picture });
 
-  let Usertoken = jwt.sign({ _id: sub, email: email }, SECRET_KEY, {
-    expiresIn: "24h",
-  });
-  res.status(201);
-  res.json({ name, email, photo: picture, token: Usertoken, _id: sub });
-});
+//   let Usertoken = jwt.sign({ _id: sub, email: email }, SECRET_KEY, {
+//     expiresIn: "24h",
+//   });
+//   res.status(201);
+//   res.json({ name, email, photo: picture, token: Usertoken, _id: sub });
+// });
 
 router.post("/api/hash", async (req, res, next) => {
   const { password } = req.body;

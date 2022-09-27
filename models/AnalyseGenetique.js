@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
 AnalyseGenetique = new mongoose.Schema({
-  Barcode: { type: String },
+
+  Barcode: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserCsv",
+  },
+  Chrom: { type: String },
   ID_chrom: {
     type: String,
   },
@@ -18,6 +23,6 @@ AnalyseGenetique = new mongoose.Schema({
   //createdAt: { type: Date, expires: 60, default: Date.now },
 });
 module.exports = AnalyseGenetique = mongoose.model(
-  "Base-nucleotide",
+  "AnalyseGenetique",
   AnalyseGenetique
 );

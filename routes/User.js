@@ -161,9 +161,10 @@ router.post("/api/getUserByRole", auth.verifyToken, async (req, res) => {
 
 router.get("/api/getAllMails", auth.verifyToken, async (req, res) => {
   try {
-    const results = await User.find();
+    // const results = await User.find();
     const patient = await Patient.find();
-    res.send(results.concat(patient));
+    // res.send(results.concat(patient));
+    res.send(patient);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

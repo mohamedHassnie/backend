@@ -11,7 +11,7 @@ const {
 const auth = require("../middleware/auth");
 const { getUser, getVacations, createVacation } = require("../utils/query");
 
-router.post("/api/vacation", auth.verifyToken, async (req, res, next) => {
+router.post("/api/vacation", async (req, res, next) => {
   const { startingDate, endingDate, type_vacation, message } = req.body;
 
   const { id } = req.user;
@@ -145,9 +145,9 @@ router.post("/api/totaleVacation", auth.verifyToken, async (req, res, next) => {
         } else {
           await Vacation.updateOne(
             { userId: element._id },
-            { maxDaysMalade: maxDays }
+            { maxDayssick: maxDays }
           );
-          res.status(200).send("maxDaysMalade :" + totale);
+          res.status(200).send("maxDayssick :" + totale);
         }
       });
     } else return res.status(201).send("use not found");

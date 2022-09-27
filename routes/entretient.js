@@ -9,22 +9,20 @@ const SECRET_KEY = "AZyWmZ1456@TOOP";
 router.post("/api/addEntretient", async (req, res, next) => {
   const { interview, interv, date_entretient, type } = req.body;
   try {
-      const newentretient = new entretient({
-        interview,
-        interv,
-        date_entretient,
-        type,
-        status: "attente",
-      });
-      await newentretient.save();
+    const newentretient = new entretient({
+      interview,
+      interv,
+      date_entretient,
+      type,
+      status: "attente",
+    });
+    await newentretient.save();
 
-      res.send(newentretient).status(200)
-
+    res.send(newentretient).status(200);
   } catch (err) {
     next(err);
   }
 });
-
 
 router.get("/api/getEntretient", async (req, res, next) => {
   try {
@@ -35,20 +33,20 @@ router.get("/api/getEntretient", async (req, res, next) => {
   }
 });
 
-
 router.post("/api/getEntretientByInterv", async (req, res, next) => {
   try {
-    const year = new Date().getDate("YYYY-MM-DD")
-    const mounth = new Date().getMonth
-    const day = new Date().getDay
-    const results = await entretient.find({interv :{$elemMatch:{email:req.body.email}}, date_entretient : new RegExp(".*" + year+ ".*")});
+    const year = new Date().getDate("YYYY-MM-DD");
+    const mounth = new Date().getMonth;
+    const day = new Date().getDay;
+    const results = await entretient.find({
+      interv: { $elemMatch: { email: req.body.email } },
+      date_entretient: new RegExp(".*" + year + ".*"),
+    });
     res.send(results);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
-
-
 
 router.get("/api/deleteEntretient/:id", async (req, res) => {
   const { id } = req.params;
@@ -61,13 +59,11 @@ router.get("/api/deleteEntretient/:id", async (req, res) => {
   }
 });
 
-router.put("/api/updateEntretien/:id", async function (req, res) {
+router.put("/api/updateEntretient/:id", async function (req, res) {
   const userId = req.params.id;
-  const  newUser = req.body;
-      const entre = await entretient.findByIdAndUpdate(userId,newUser);
-      res.send(entre).status(200);
-
-
+  const newUser = req.body;
+  const entre = await entretient.findByIdAndUpdate(userId, newUser);
+  res.send(entre).status(200);
 });
 
 module.exports = router;

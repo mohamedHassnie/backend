@@ -5,7 +5,7 @@ const fs = require("fs");
 const util = require("util");
 const path = require("path");
 const router = express.Router();
-const AnalyseGenetique = require("../models/BaseNucleotide");
+const AnalyseGenetique = require("../models/AnalyseGenetique");
 
 const userCsv = require("../models/UserCsv");
 const log = require("../models/log_file");
@@ -35,23 +35,21 @@ const treatFile = async (file) => {
       "../uploadsVCF/",
       file.name.split(".")[0] + ".vcf"
     );
-    // newPath = log.create({
-    //   pathCsv: FILE_USER_PATH,
-    //   pathVcf: FILE_CHROMO_USER_PATH,
-    //   name: file.name,
-    // });
+    newPath = log.create({
+      // pathCsv: FILE_USER_PATH,
+      // pathVcf: FILE_CHROMO_USER_PATH,
+      name: file.name,
+    });
 
     const userdata = fs.readFileSync(FILE_USER_PATH).toLocaleString();
     const rows = userdata.split("\n"); // SPLIT ROWS
     console.log(rows[1]);
     const Barcode = rows[0].split(";")[1];
     const Name = rows[4].split(";")[1];
-    const ID_Passport = rows[5].split(";")[1];
+    const Date_of_birth = rows[5].split(";")[1];
     const Nationality = rows[6].split(";")[1];
     const Gender = rows[7].split(";")[1];
-    // const Email_address = rows[9].split(";")[1];
-    // const Contact_number = rows[10].split(";")[1];
-    //const Physical_Address = rows[11].split(";")[1];
+
     const Country_of_Origin = rows[14].split(";")[1];
 
     const Do_you_drink_Alcohol_You = rows[16].split(";")[1];
@@ -166,16 +164,15 @@ const treatFile = async (file) => {
     const Reproductive_Post_menopausal_Child = rows[41].split(";")[4];
 
     let user = await userCsv.findOne({ Barcode });
-
     if (user) {
       console.log(Name, "user deja existe");
     } else {
       await userCsv.create({
         Barcode,
         Name,
-        ID_Passport,
         Nationality,
         Gender,
+        Date_of_birth,
         Country_of_Origin,
         Do_you_drink_Alcohol_You,
         Do_you_drink_Alcohol_Father,
@@ -261,16 +258,17 @@ const treatFile = async (file) => {
       const CASE11 = new RegExp(/1\/1:[1-14]*/gm);
       const CASE12 = new RegExp(/.\/.:[1-14]*/gm);
       rl.on("error", reject);
-      lineCount = 0;
+      lineCount = 1;
       rl.on("line", async (line) => {
         lineCount++;
-        if (line.split("\t")[0][0] !== "#" && lineCount < 500000) {
-          //console.log("Processing line number: ", lineCount);
+        if (line.split("\t")[0][0] !== "#") {
+          // console.log("Processing line number: ", lineCount);
           let qualityScore = line.split("\t")[9];
           switch (true) {
             case CASE00.test(qualityScore):
               await AnalyseGenetique.create({
                 Barcode: rows[0].split(";")[1],
+                Chrom: line.split("\t")[0],
                 ID_chrom: line.split("\t")[2],
                 // POS: line.split("\t")[1],
                 GénoType: line.split("\t")[3] + " | " + line.split("\t")[3],
@@ -278,7 +276,9 @@ const treatFile = async (file) => {
               });
             case CASE01.test(qualityScore):
               await AnalyseGenetique.create({
+                Barcode: rows[0].split(";")[1],
                 ID_chrom: line.split("\t")[2],
+                Chrom: line.split("\t")[0],
                 // POS: line.split("\t")[1],
                 GénoType: line.split("\t")[3] + " | " + line.split("\t")[4],
                 type: "01",
@@ -296,6 +296,7 @@ const treatFile = async (file) => {
             case CASE12.test(qualityScore):
               await AnalyseGenetique.create({
                 Barcode: rows[0].split(";")[1],
+                Chrom: line.split("\t")[0],
                 ID_chrom: line.split("\t")[2],
                 // POS: line.split("\t")[1],
                 GénoType: line.split("\t")[3] + " | " + line.split("\t")[4],
@@ -306,6 +307,7 @@ const treatFile = async (file) => {
               //   // normalizedCase.CASENS.push({
               await AnalyseGenetique.create({
                 Barcode: rows[0].split(";")[1],
+                Chrom: line.split("\t")[0],
                 ID_chrom: line.split("\t")[2],
                 // POS: line.split("\t")[1],
                 GénoType: line.split("\t")[3] + " | " + line.split("\t")[4],
